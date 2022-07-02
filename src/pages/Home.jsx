@@ -5,7 +5,6 @@ import UsersResult from '../components/users/UsersResult'
 const Home = () => {
   return (
     <div>
-      {/* SEARCH COMPONET */}
       <UserSearch />
       <UsersResult />
     </div>
