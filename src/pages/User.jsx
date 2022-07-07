@@ -3,6 +3,7 @@ import GithubContext from "../context/github/GithubContext";
 import { Link, useParams } from "react-router-dom";
 import { FaCodepen, FaStore, FaUserFriends, FaUsers } from "react-icons/fa";
 import { BeatLoader } from "react-spinners";
+import UserRepo from "../components/users/UserRepo";
 
 const User = () => {
   const { getUser, user, loading, getRepos, repos } = useContext(GithubContext);
@@ -149,25 +150,7 @@ const User = () => {
           </div>
         </div>
 
-        <div className="grid grid-cols-1 xl:grid-cols-3 lg:grid-cols-3 md:grid-cols-3 mb-8 md:gap-8">
-          {repos.map((repo) => (
-            <div className="card my-2  bg-base-100 shadow-2xl">
-              {/* <figure>
-                <img src="https://placeimg.com/400/225/arch" alt="Shoes" />
-              </figure> */}
-              <div className="card-body">
-                <h2 className="card-title">
-                  {repo.name}
-                  {repo.language && <div className="badge badge-secondary">{repo.language}</div>}
-                </h2>
-                <p>{repo.description}</p>
-                <div className="card-actions justify-end">
-                  <a className="btn btn-outline btn-sm">Visit Repo</a>
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
+        <UserRepo repos={repos} />
       </div>
     </>
   );
