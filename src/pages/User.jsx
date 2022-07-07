@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import GithubContext from "../context/github/GithubContext";
 import { Link, useParams } from "react-router-dom";
-import { FaCodepen, FaStore, FaUserFriends, FaUsers } from "react-icons/fa";
+import { FaCodepen, FaStore, FaUserFriends, FaUsers, FaArrowLeft } from "react-icons/fa";
 import { BeatLoader } from "react-spinners";
 import UserRepo from "../components/users/UserRepo";
 
@@ -45,6 +45,7 @@ const User = () => {
       <div className="w-full mx-auto lg:w-10/12">
         <div className="mb-4">
           <Link to="/" className="btn btn-ghost">
+            <FaArrowLeft className="mr-2 text-2xl" />
             Back To Search
           </Link>
         </div>
