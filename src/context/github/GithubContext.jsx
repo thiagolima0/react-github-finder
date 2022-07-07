@@ -9,6 +9,7 @@ const GITHUB_TOKEN = import.meta.env.VITE_REACT_APP_GITHUB_TOKEN;
 export const GithubProvider = ({ children }) => {
   const initialState = {
     users: [],
+    user: {},
     loading: false,
   };
 
@@ -37,17 +38,49 @@ export const GithubProvider = ({ children }) => {
     });
   };
 
+  const getUser = async (username) => {
+    setLoading();
+
+    const response = await fetch(`${GITHUB_URL}/users/${username}`, {
+      headers: {
+        Authorization: `token ${GITHUB_TOKEN}`,
+      },
+    });
+
+
+    if (response.status === 404) {
+      window.location = "/not-found";
+    } else {
+
+      const data = await response.json();
+
+      dispatch({
+        type: "GET_USER",
+        payload: data,
+      });
+    }
+
+
+  };
+
   const setLoading = () => {
     dispatch({ type: "SET_LOADING" });
   };
 
   const cleanUsers = () => {
-    dispatch({type: "CLEAN_USERS"})
-  }
+    dispatch({ type: "CLEAN_USERS" });
+  };
 
   return (
     <GithubContext.Provider
-      value={{ users: state.users, loading: state.loading, searchUsers, cleanUsers }}
+      value={{
+        users: state.users,
+        loading: state.loading,
+        user: state.user,
+        getUser,
+        searchUsers,
+        cleanUsers,
+      }}
     >
       {children}
     </GithubContext.Provider>
