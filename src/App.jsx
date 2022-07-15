@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import AppFooter from "./components/layout/AppFooter";
 import AppNavbar from "./components/layout/AppNavbar";
 import About from "./pages/About";
 import Home from "./pages/Home";
@@ -8,6 +7,7 @@ import NotFound from "./pages/NotFound";
 import { GithubProvider } from "./context/github/GithubContext";
 import { AlertProvider } from "./context/alert/AlerContext";
 import AppAlert from "./components/AppAlert";
+import Unauthorized from "./pages/Unauthorized";
 
 function App() {
   return (
@@ -24,6 +24,7 @@ function App() {
               <Route path="/about" element={<About />} />
               <Route path="/user/:login" element={<User />} />
               <Route path="/notfound" element={<NotFound />} />
+              <Route path="/unauthorized" element={<Unauthorized />} />
               <Route path="/*" element={<NotFound />} />
             </Routes>
           </main>
