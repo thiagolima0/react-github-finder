@@ -1,7 +1,7 @@
-const alertReducer = (state, action) => {
-  switch (action.type) {
+const alertReducer = (state, {payload, type}) => {
+  switch (type) {
     case "SET_ALERT":
-      return action.payload;
+      return payload;
 
     case "REMOVE_ALERT":
       return null;
