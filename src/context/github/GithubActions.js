@@ -1,4 +1,4 @@
-import { Api } from "../../api/Api";
+import Api from "../../api/Api";
 
 export const searchUsers = async (text) => {
   const params = new URLSearchParams({
