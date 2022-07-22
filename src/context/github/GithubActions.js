@@ -1,58 +1,44 @@
-const GITHUB_URL = import.meta.env.VITE_REACT_APP_GITHUB_URL
-const GITHUB_TOKEN = import.meta.env.VITE_REACT_APP_GITHUB_TOKEN
+import { Api } from "../../api/Api";
 
 export const searchUsers = async (text) => {
   const params = new URLSearchParams({
     q: text,
-  })
+  });
 
-  const response = await fetch(`${GITHUB_URL}/search/users?${params}`, {
-    headers: {
-      Authorization: `token ${GITHUB_TOKEN}`,
-    },
-  })
+  const response = await Api.get(`/search/users?${params}`);
 
   if (response.status === 401) {
-    window.location = '/unauthorized'
-    return
+    window.location = "/unauthorized";
+    return;
   }
 
-  const { items } = await response.json()
+  const { items } = await response.data;
 
-
-  return items
-}
+  return items;
+};
 
 export const getUser = async (username) => {
-  let data = []
-  const response = await fetch(`${GITHUB_URL}/users/${username}`, {
-    headers: {
-      Authorization: `token ${GITHUB_TOKEN}`,
-    },
-  })
+  let data = [];
+  const response = await Api.get(`/users/${username}`);
 
   if (response.status === 404) {
-    window.location = '/not-found'
+    window.location = "/not-found";
   } else {
-    data = await response.json()
+    data = await response.data;
   }
 
-  return data
-}
+  return data;
+};
 
 export const getRepos = async (username) => {
-  let data = []
-  const response = await fetch(`${GITHUB_URL}/users/${username}/repos`, {
-    headers: {
-      Authorization: `token ${GITHUB_TOKEN}`,
-    },
-  })
+  let data = [];
+  const response = await Api.get(`/users/${username}/repos`);
 
   if (response.status === 404) {
-    window.location = '/not-found'
+    window.location = "/not-found";
   } else {
-    data = await response.json()
+    data = await response.data;
   }
 
-  return data
-}
+  return data;
+};
