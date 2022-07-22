@@ -10,7 +10,7 @@ import {
 } from "react-icons/fa";
 import { BeatLoader } from "react-spinners";
 import UserRepo from "../components/users/UserRepo";
-import { getUser, getRepos } from "../context/github/GithubActions";
+import { getUserAndRepos } from "../context/github/GithubActions";
 
 const User = () => {
   const { user, loading, repos, dispatch } = useContext(GithubContext);
@@ -36,8 +36,7 @@ const User = () => {
 
   const fetchUserData = async () => {
     dispatch({type: "SET_LOADING"})
-    const user = await getUser(params.login);
-    const repos = await getRepos(params.login);
+    const [user, repos] = await getUserAndRepos(params.login)
 
     dispatch({ type: "GET_USER", payload: user });
     dispatch({ type: "GET_REPOS", payload: repos });

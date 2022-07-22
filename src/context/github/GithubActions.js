@@ -17,28 +17,11 @@ export const searchUsers = async (text) => {
   return items;
 };
 
-export const getUser = async (username) => {
-  let data = [];
-  const response = await Api.get(`/users/${username}`);
+export const getUserAndRepos = async (username) => {
+  const [user, repos] = await Promise.all([
+    Api.get(`/users/${username}`),
+    Api.get(`/users/${username}/repos`)
+  ])
 
-  if (response.status === 404) {
-    window.location = "/not-found";
-  } else {
-    data = await response.data;
-  }
-
-  return data;
-};
-
-export const getRepos = async (username) => {
-  let data = [];
-  const response = await Api.get(`/users/${username}/repos`);
-
-  if (response.status === 404) {
-    window.location = "/not-found";
-  } else {
-    data = await response.data;
-  }
-
-  return data;
-};
+  return [user.data, repos.data]
+}
