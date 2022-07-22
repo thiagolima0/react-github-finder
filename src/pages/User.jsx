@@ -1,12 +1,19 @@
 import { useContext, useEffect } from "react";
 import GithubContext from "../context/github/GithubContext";
 import { Link, useParams } from "react-router-dom";
-import { FaCodepen, FaStore, FaUserFriends, FaUsers, FaArrowLeft } from "react-icons/fa";
+import {
+  FaCodepen,
+  FaStore,
+  FaUserFriends,
+  FaUsers,
+  FaArrowLeft,
+} from "react-icons/fa";
 import { BeatLoader } from "react-spinners";
 import UserRepo from "../components/users/UserRepo";
+import { getUser, getRepos } from "../context/github/GithubActions";
 
 const User = () => {
-  const { getUser, user, loading, getRepos, repos } = useContext(GithubContext);
+  const { user, loading, repos, dispatch } = useContext(GithubContext);
 
   const params = useParams();
 
@@ -27,9 +34,17 @@ const User = () => {
     hireable,
   } = user;
 
+  const fetchUserData = async () => {
+    dispatch({type: "SET_LOADING"})
+    const user = await getUser(params.login);
+    const repos = await getRepos(params.login);
+
+    dispatch({ type: "GET_USER", payload: user });
+    dispatch({ type: "GET_REPOS", payload: repos });
+  };
+
   useEffect(() => {
-    getUser(params.login);
-    getRepos(params.login);
+    fetchUserData();
   }, []);
 
   if (loading) {
